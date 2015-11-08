@@ -2,10 +2,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    overlayImage.loadImage("kenpoku.png");
     ofSetWindowShape(320, 341);
     BAND = 255.0/NUM_BANDS;
     for (int i = 0; i < NUM_BALLS; i++) {
-        balls.push_back(new MetaBall(ofRandom(MIN_SIZE, MIN_SIZE*1.5f)));
+        balls.push_back(new MetaBall(100, 240, ofRandom(MIN_SIZE, MIN_SIZE*1.5f)));
     }
     
     img.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_GRAYSCALE);
@@ -24,28 +25,29 @@ void ofApp::update(){
             balls[i]->update();
         }
     }
-        // non-nested loop gives us about +5 ms per frame
-        for (int i = 0; i < ofGetHeight() * ofGetWidth(); i++) {
-            float col = 0.0f;
+    // non-nested loop gives us about +5 ms per frame
+    for (int i = 0; i < ofGetHeight() * ofGetWidth(); i++) {
+        float col = 0.0f;
+        
+        for (int m = 0; m < NUM_BALLS; m++) {
+            int y = floor(i / ofGetWidth()); // faster than using int
+            int x = i % (int)ofGetWidth();
             
-            for (int m = 0; m < NUM_BALLS; m++) {
-                int y = floor(i / ofGetWidth()); // faster than using int
-                int x = i % (int)ofGetWidth();
-                
-                float xx = (balls[m]->pos.x + ofGetWidth()/2.0) - x;
-                float yy = (balls[m]->pos.y + ofGetHeight()/2.0) - y;
-                
-                col += balls[m]->radius / sqrt( xx * xx + yy * yy);
-            }
-            img.getPixels()[i] = colorLookup(255 * col);
+            float xx = (balls[m]->pos.x) - x;
+            float yy = (balls[m]->pos.y) - y;
+            
+            col += balls[m]->radius / sqrt( xx * xx + yy * yy);
         }
-        img.update();        
+        img.getPixels()[i] = colorLookup(255 * col);
+    }
+    img.update();
     
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     img.draw(0, 0, ofGetWidth(), ofGetHeight());
+    overlayImage.draw(0, 0, overlayImage.width, overlayImage.height);
 }
 
 //--------------------------------------------------------------

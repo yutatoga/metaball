@@ -19,15 +19,21 @@ public:
         pos.set(0, 0);
         radius = r;
     }
+    MetaBall(int x, int y, float r) {
+        dir.set(ofRandom(-1, 1), ofRandom(-1, 1));
+        dir.normalize();
+        pos.set(x, y);
+        radius = r;
+    }
     
     void update() {
         pos.x += dir.x;
         pos.y += dir.y;
         
-        if (abs(pos.x) > ofGetWidth()/2) {
+        if (pos.x > ofGetWidth() | pos.x < 0) {
             dir.x *= -1;
         }
-        if (abs(pos.y) > ofGetHeight()/2) {
+        if (pos.y > ofGetHeight() | pos.y < 0) {
             dir.y *= -1;
         }
     }
@@ -57,4 +63,5 @@ public:
     float BAND;
     
     bool enableAnimation;
+    ofImage overlayImage;
 };
