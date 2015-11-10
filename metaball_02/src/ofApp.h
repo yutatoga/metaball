@@ -19,9 +19,26 @@ public:
         pos.set(0, 0);
         radius = r;
     }
+    
     MetaBall(int x, int y, float r) {
         dir.set(ofRandom(-1, 1), ofRandom(-1, 1));
         dir.normalize();
+        pos.set(x, y);
+        radius = r;
+    }
+    
+    MetaBall(int x, int y, float dirX, float dirY, float r) {
+        dir.set(dirX, dirY);
+        dir.normalize();
+        pos.set(x, y);
+        radius = r;
+    }
+
+    MetaBall(int x, int y, float dirX, float dirY, float r, bool enableNormalize) {
+        dir.set(dirX, dirY);
+        if (enableNormalize){
+            dir.normalize();
+        }
         pos.set(x, y);
         radius = r;
     }

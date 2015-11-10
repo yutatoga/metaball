@@ -5,9 +5,13 @@ void ofApp::setup(){
     overlayImage.loadImage("kenpoku.png");
     ofSetWindowShape(320, 341);
     BAND = 255.0/NUM_BANDS;
-    for (int i = 0; i < NUM_BALLS; i++) {
-        balls.push_back(new MetaBall(100, 240, ofRandom(MIN_SIZE, MIN_SIZE*1.5f)));
-    }
+    
+    balls.push_back(new MetaBall(100, 240, -0.1, -0.6, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false));
+    balls.push_back(new MetaBall(100, 240,  0.2, -0.3, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false)); // long center place
+    balls.push_back(new MetaBall(100, 240, 0.4, -0.5, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false));
+    balls.push_back(new MetaBall(100, 240, 0.7, -0.7, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false));
+    balls.push_back(new MetaBall(100, 240, 0.55, -0.2, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false));
+    balls.push_back(new MetaBall(100, 240, 0.01, -0.002, ofRandom(MIN_SIZE, MIN_SIZE*1.5f), false));
     
     img.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_GRAYSCALE);
     
